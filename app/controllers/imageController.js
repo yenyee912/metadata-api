@@ -8,18 +8,21 @@ async function pushImages(metadata, contractAdd) {
     let extension = path.extname(metadata.originalname)
     let targetPath = path.resolve('./images/' + contractAdd + extension)
     let newPath = fs.rename(tempPath, targetPath, function (err) {
-        console.log("new path: " + newPath)
+        // console.log("new path: " + targetPath)
     })
     let filename = `${contractAdd}${extension}`;
 
     let filepath = `/images/${contractAdd}${extension}`;
-    console.log("filepath: " +  filepath)
+    // console.log("filepath: " +  filepath)
     return { fileName: filename, filePath: filepath}
 
 }
 
 exports.uploadImages = async (req, res) => {
-    console.log(req.body.contractAddress)
+    console.log(req.body.metadata[0])
+    var metadata = req.body.metadata
+    // x= JSON.stringify(x)
+
     console.log(req.file)
 
     let contractAddress = req.body.contractAddress
@@ -27,15 +30,16 @@ exports.uploadImages = async (req, res) => {
     try {
         if (req.file) {
             let imageRecord = new Image({
-                contractAddress: contractAddress
+                contractAddress: contractAddress,
+                metadata:metadata
             })
 
-            console.log(imageRecord)
+            // console.log(imageRecord)
             let imageData = await pushImages(req.file, imageRecord.contractAddress )
             
             imageRecord.filePath = imageData.filePath
             imageRecord.fileName = imageData.fileName
-
+            
             const x = await imageRecord.save()
 
             try {

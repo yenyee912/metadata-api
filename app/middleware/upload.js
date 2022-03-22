@@ -11,20 +11,20 @@ const storage = multer.diskStorage({
 
 });
 
-const imageFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith("image")) {
+const mediaFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith("image")||file.mimetype.startsWith("video")) {
         cb(null, true);
     }
     //reject non image
     else {
-        cb("Please upload only images.", false);
+        cb("Please upload only image or video.", false);
     }
 };
 
 const uploadImage = multer(
     {
         storage: storage,
-        fileFilter: imageFilter
+        fileFilter: mediaFilter
     });
 
 module.exports = uploadImage;

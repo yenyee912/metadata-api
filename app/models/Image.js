@@ -1,15 +1,24 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+//metadata or attributes
+const metadataSchema = new Schema({
+    trait_type: {
+        type: String,
+        required: true
+    },
+    value: {
+        type: String,
+        required: true
+    }
+})
+
 const ImageSchema = new Schema({
     contractAddress: {
-        // required: true,
+        required: true,
         type: Number,
     },
-    description: {
-        // required: true,
-        type: String,
-    },
+    metadata: [metadataSchema],
     // for multiple uploads
     fileName: {
         required: true,
