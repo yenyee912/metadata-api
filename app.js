@@ -44,7 +44,7 @@ try {
   console.log("connecting.....")
   await mongoose.connect(mongoURI, 
     { useNewUrlParser: true,
-    dbName: "2d-pixel-world" });
+    dbName: process.env.DB_NAME});
 //   mongoose.Promise = global.Promise;
 //   var db = mongoose.connection;
 // db.on('error', console.error.bind(console, 'MongoDB connection error:'));
