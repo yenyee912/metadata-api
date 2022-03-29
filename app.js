@@ -3,6 +3,7 @@ var app = express();
 
 // Mongoose API
 var imageAPI = require('./app/routes/imageRoute');
+var mapAPI = require('./app/routes/mapRoute');
 
 // Body Parser
 app.use(express.json());
@@ -35,19 +36,28 @@ require('dotenv').config();
 
 // Set up mongoose connection
 var mongoose = require('mongoose');
-const mongoURI = `mongodb://${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`;
+const connectMongo = async () => {
+// const mongoURI = `mongodb://${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`;
 // const mongoURI = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`;
-mongoose
-  .connect(mongoURI, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  })
-  .then(() => console.log(`${process.env.MONGO_DB} connected`));
-mongoose.Promise = global.Promise;
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+const mongoURI = "mongodb://admin:do127017seow@web3-gamefi.xyz:27017/admin"
+try {
+  console.log("connecting.....")
+  await mongoose.connect(mongoURI, 
+    { useNewUrlParser: true,
+    dbName: "2d-pixel-world" });
+//   mongoose.Promise = global.Promise;
+//   var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+console.log("ok")
+} 
 
+catch (error) {
+  // handleError(error);
+  console.log(error)
+}
+}
 
+connectMongo()
 
 // Upload middleware: multer
 // temp is to store user uplaod files & images--without validation
@@ -57,6 +67,7 @@ app.use('/images', express.static('images'));
 
 // // routes
 app.use('/api/v1/image', imageAPI);
+app.use('/map', mapAPI);
 
 // Welcome msg on browser
 app.get('/', (req, res) => {
