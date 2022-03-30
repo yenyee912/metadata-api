@@ -61,12 +61,13 @@ connectMongo()
 
 // Upload middleware: multer
 // temp is to store user uplaod files & images--without validation
-// 1st arg: virtual path, 2nd: actual path(just state the folder name), without dash; root
+// app.use: 1st arg: virtual path, 2nd: actual path(just state the folder name), without slash; root
 app.use('/temp', express.static('temp'));
 app.use('/images', express.static('images'));
+app.use('/maps', express.static('map'));
 
 // // routes
-app.use('/api/v1/image', imageAPI);
+app.use('/image', imageAPI);
 app.use('/map', mapAPI);
 
 // Welcome msg on browser
