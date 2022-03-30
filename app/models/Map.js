@@ -26,7 +26,11 @@ const MapSchema = new Schema({
     required: true,
     type: String,
   },  
-  server_url: {
+  json_server_url: {
+    required: true,
+    type: String,
+  },
+  tmx_server_url: { // auto downloadble content
     required: true,
     type: String,
   },
