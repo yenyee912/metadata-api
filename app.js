@@ -64,7 +64,7 @@ connectMongo()
 // app.use: 1st arg: virtual path, 2nd: actual path(just state the folder name), without slash; root
 app.use('/temp', express.static('temp'));
 app.use('/images', express.static('images'));
-app.use('/maps', express.static('map'));
+app.use('/maps', express.static('maps'));
 
 // // routes
 app.use('/image', imageAPI);
