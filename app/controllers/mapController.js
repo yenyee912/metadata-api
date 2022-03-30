@@ -1,9 +1,10 @@
-const Map = require("../models/Map");
-const path = require('path');
+const Map2 = require("../models/Map");
 
-exports.getAllMaps = async (req, res, next) => {
+exports.getAllMaps = async (req, res) => {
   try {  
-    const x = await Map.find().sort({ _id: -1 })
+    const x = await Map2.find()
+
+    console.log(x)
 
     if (x)
       res.status(200).send({ data: x });

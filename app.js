@@ -37,14 +37,12 @@ require('dotenv').config();
 // Set up mongoose connection
 var mongoose = require('mongoose');
 const connectMongo = async () => {
-// const mongoURI = `mongodb://${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`;
-// const mongoURI = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`;
-const mongoURI = "mongodb://admin:do127017seow@web3-gamefi.xyz:27017/admin"
+const mongoURI = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}`;
 try {
-  console.log("connecting.....")
+  console.log("connecting.....", process.env.MONGO_DB_NAME)
   await mongoose.connect(mongoURI, 
     { useNewUrlParser: true,
-    dbName: process.env.DB_NAME});
+    dbName: process.env.MONGO_DB_NAME});
 //   mongoose.Promise = global.Promise;
 //   var db = mongoose.connection;
 // db.on('error', console.error.bind(console, 'MongoDB connection error:'));
