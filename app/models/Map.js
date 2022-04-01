@@ -1,17 +1,17 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 //metadata or attributes
 const metadataSchema = new Schema({
   trait_type: {
     type: String,
-    required: true
+    required: true,
   },
   value: {
     type: String,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
 const MapSchema = new Schema({
   contract_address: {
@@ -19,38 +19,43 @@ const MapSchema = new Schema({
     type: String,
   },
   token_id: {
-    required: true,
+    // required: true,
     type: String,
   },
-  property_privacy:{
-    required: true,
+  property_privacy: {
+    // required: true,
     type: String,
-  },  
+  },
   json_server_url: {
-    required: true,
+    // required: true,
     type: String,
   },
-  tmx_server_url: { // auto downloadble content
-    required: true,
+  tmx_server_url: {
+    // auto downloadble content
+    // required: true,
     type: String,
   },
   ipfs_url: {
-    required: true,
+    // required: true,
     type: String,
   },
   metadata: [metadataSchema],
-  file_name: {
-    required: true,
-    type: String,
-  },
-  file_path: {
-    required: true,
-    type: String,
-  },
+  file_name: [
+    {
+      required: true,
+      type: String,
+    },
+  ],
+  file_path: [
+    {
+      required: true,
+      type: String,
+    },
+  ],
   created_at: {
     default: Date(),
     type: Date,
   },
 });
 
-module.exports = mongoose.model('map', MapSchema, 'map');
+module.exports = mongoose.model("map", MapSchema, "map");

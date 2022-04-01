@@ -5,3 +5,5 @@ package-lock.json
 *.png
 *.mp4
 *.gif
+*.tmx
+*.json
