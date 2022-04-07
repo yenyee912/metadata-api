@@ -34,6 +34,20 @@ exports.getAllMaps = async (req, res) => {
   }
 };
 
+exports.getOneMapByUserContract = async (req, res) => {
+  try {
+    console.log(req.params)
+    const x = await Map2.findOne(req.params);
+
+    if (x) res.status(200).send({ data: x });
+    else res.status(200).send({ msg: `No data with contract ID= ${req.query.params}.` });
+  } catch (err) {
+    res
+      .status(500)
+      .send({ msg: `Error while retrieving map(s): ${err.message}.` });
+  }
+};
+
 exports.uploadMap = async (req, res) => {
   let token_id = req.body.token_id;
   const map = await Map2.findOne({ token_id: token_id });
