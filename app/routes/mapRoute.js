@@ -6,7 +6,7 @@ const upload = require("../middleware/upload_map");
 
 router.get("/", mapController.getAllMaps);
 
-router.get("/:contract_address", mapController.getOneMapByUserContract);
+router.get("/:contract_address", mapController.getMapByUserContract);
 
 router.post("/", upload.array("files", 2), mapController.uploadMap);
 

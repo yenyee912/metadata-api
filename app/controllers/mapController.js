@@ -34,10 +34,10 @@ exports.getAllMaps = async (req, res) => {
   }
 };
 
-exports.getOneMapByUserContract = async (req, res) => {
+exports.getMapByUserContract = async (req, res) => {
   try {
     console.log(req.params)
-    const x = await Map2.findOne(req.params);
+    const x = await Map2.find(req.params);
 
     if (x) res.status(200).send({ data: x });
     else res.status(200).send({ msg: `No data with contract ID= ${req.query.params}.` });
