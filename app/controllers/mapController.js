@@ -64,6 +64,7 @@ exports.uploadMap = async (req, res) => {
         metadata: req.body.metadata,
         token_id: token_id,
         ipfs_url: req.body.ipfs_url,
+        image_hash: req.body.image_hash,
         property_privacy: req.body.property_privacy,
         file_name: [],
         file_path: [],
