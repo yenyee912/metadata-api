@@ -19,28 +19,19 @@ const MapSchema = new Schema({
     type: String,
   },
   token_id: {
-    // required: true,
+    required: true,
     type: String,
   },
   property_privacy: {
-    // required: true,
-    type: String,
-  },
-  json_server_url: {
-    // required: true,
-    type: String,
-  },
-  tmx_server_url: {
-    // auto downloadble content
-    // required: true,
+    required: true,
     type: String,
   },
   ipfs_url: {
-    // required: true,
+    required: true,
     type: String,
   },
   metadata: [metadataSchema],
-  file_name: [
+  file_name: [ //.tmx file first, then followed by .json files
     {
       required: true,
       type: String,
@@ -55,6 +46,10 @@ const MapSchema = new Schema({
   created_at: {
     default: Date(),
     type: Date,
+  },
+  image_hash: {
+    required: true,
+    type: String,
   },
 });
 
