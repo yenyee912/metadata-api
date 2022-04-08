@@ -6,10 +6,10 @@ const upload = require("../middleware/upload_map");
 
 router.get("/", mapController.getAllMaps);
 
-router.get("/:contract_address", mapController.getMapByUserContract);
+router.get("/:image_hash", mapController.getMapByImageHash);
 
 router.post("/", upload.array("files", 2), mapController.uploadMap);
 
-router.put("/", upload.array("files", 2), mapController.updateOneMap);
+router.put("/:image_hash", upload.array("files", 2), mapController.updateOneMap);
 
 module.exports = router;

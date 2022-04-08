@@ -34,7 +34,7 @@ exports.getAllMaps = async (req, res) => {
   }
 };
 
-exports.getMapByUserContract = async (req, res) => {
+exports.getMapByImageHash = async (req, res) => {
   try {
     console.log(req.params)
     const x = await Map2.find(req.params);
@@ -50,6 +50,7 @@ exports.getMapByUserContract = async (req, res) => {
 
 exports.uploadMap = async (req, res) => {
   let token_id = req.body.token_id;
+  
   const map = await Map2.findOne({ token_id: token_id });
 
   if (map) {
@@ -63,6 +64,7 @@ exports.uploadMap = async (req, res) => {
         contract_address: req.body.contract_address,
         attributes: req.body.attributes,
         token_id: token_id,
+        image_hash: req.body.image_hash,
         ipfs_url: req.body.ipfs_url,
         image_hash: req.body.image_hash,
         property_privacy: req.body.property_privacy,
@@ -109,13 +111,13 @@ exports.uploadMap = async (req, res) => {
 };
 
 exports.updateOneMap = async (req, res) => {
-  let token_id = req.body.token_id;
+  let image_hash = req.body.image_hash;
 
   if (req.files) {
     let filesRecord = {
       contract_address: req.body.contract_address,
       metadata: req.body.metadata,
-      token_id: token_id,
+      token_id: req.body.token_id,
       ipfs_url: req.body.ipfs_url,
       property_privacy: req.body.property_privacy,
       file_name: [],
@@ -131,7 +133,7 @@ exports.updateOneMap = async (req, res) => {
 
     try {
       const x = await Map2.findOneAndUpdate(
-        { token_id: { $eq: token_id } },
+        { image_hash: { $eq: image_hash  } },
         filesRecord,
         {
           upsert: false,
