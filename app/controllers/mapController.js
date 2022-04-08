@@ -61,7 +61,7 @@ exports.uploadMap = async (req, res) => {
     if (req.files) {
       let filesRecord = new Map2({
         contract_address: req.body.contract_address,
-        metadata: req.body.metadata,
+        attributes: req.body.attributes,
         token_id: token_id,
         ipfs_url: req.body.ipfs_url,
         image_hash: req.body.image_hash,

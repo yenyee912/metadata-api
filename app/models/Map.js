@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 //metadata or attributes
-const metadataSchema = new Schema({
+const attributeSchema = new Schema({
   trait_type: {
     type: String,
     required: true,
@@ -30,7 +30,7 @@ const MapSchema = new Schema({
     required: true,
     type: String,
   },
-  metadata: [metadataSchema],
+  attributes: [attributeSchema],
   file_name: [ //.tmx file first, then followed by .json files
     {
       required: true,
