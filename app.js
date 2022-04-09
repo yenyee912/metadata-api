@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 
 // Mongoose API
-var imageAPI = require('./app/routes/imageRoute');
+var avatarAPI = require('./app/routes/avatarRoute');
 var mapAPI = require('./app/routes/mapRoute');
 
 // Body Parser
@@ -61,11 +61,11 @@ connectMongo()
 // temp is to store user uplaod files & images--without validation
 // app.use: 1st arg: virtual path, 2nd: actual path(just state the folder name), without slash; root
 app.use('/temp', express.static('temp'));
-app.use('/images', express.static('images'));
+app.use('/avatars', express.static('avatars'));
 app.use('/maps', express.static('maps'));
 
 // // routes
-app.use('/image', imageAPI);
+app.use('/avatar', avatarAPI);
 app.use('/map', mapAPI);
 
 // Welcome msg on browser
