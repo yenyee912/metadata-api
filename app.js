@@ -3,6 +3,7 @@ var app = express();
 
 // Mongoose API
 var imageAPI = require('./app/routes/imageRoute');
+var mapAPI = require('./app/routes/mapRoute');
 
 // Body Parser
 app.use(express.json());
@@ -35,28 +36,37 @@ require('dotenv').config();
 
 // Set up mongoose connection
 var mongoose = require('mongoose');
-const mongoURI = `mongodb://${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`;
-// const mongoURI = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`;
-mongoose
-  .connect(mongoURI, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  })
-  .then(() => console.log(`${process.env.MONGO_DB} connected`));
-mongoose.Promise = global.Promise;
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+const connectMongo = async () => {
+const mongoURI = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOSTNAME}:${process.env.MONGO_PORT}`;
+try {
+  console.log("connecting.....", process.env.MONGO_DB_NAME)
+  await mongoose.connect(mongoURI, 
+    { useNewUrlParser: true,
+    dbName: process.env.MONGO_DB_NAME});
+//   mongoose.Promise = global.Promise;
+//   var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+console.log("ok")
+} 
 
+catch (error) {
+  // handleError(error);
+  console.log(error)
+}
+}
 
+connectMongo()
 
 // Upload middleware: multer
 // temp is to store user uplaod files & images--without validation
-// 1st arg: virtual path, 2nd: actual path(just state the folder name), without dash; root
+// app.use: 1st arg: virtual path, 2nd: actual path(just state the folder name), without slash; root
 app.use('/temp', express.static('temp'));
 app.use('/images', express.static('images'));
+app.use('/maps', express.static('maps'));
 
 // // routes
-app.use('/api/v1/image', imageAPI);
+app.use('/image', imageAPI);
+app.use('/map', mapAPI);
 
 // Welcome msg on browser
 app.get('/', (req, res) => {
