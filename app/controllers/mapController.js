@@ -1,4 +1,7 @@
-const Map2 = require("../models/Map");
+// first arg: set mdoel path, 2nd arg: collection SINGULAR NAME
+// this is to share one model among collections
+const Map2 = require("../models/Model")("map"); 
+
 
 const path = require("path");
 const fs = require("fs");
@@ -40,7 +43,7 @@ exports.getMapByImageHash = async (req, res) => {
     const x = await Map2.find(req.params);
 
     if (x) res.status(200).send({ data: x });
-    else res.status(200).send({ msg: `No data with contract ID= ${req.query.params}.` });
+    else res.status(200).send({ msg: `No data with image hash= ${req.query.params}.` });
   } catch (err) {
     res
       .status(500)
@@ -66,7 +69,6 @@ exports.uploadMap = async (req, res) => {
         token_id: token_id,
         image_hash: req.body.image_hash,
         ipfs_url: req.body.ipfs_url,
-        image_hash: req.body.image_hash,
         property_privacy: req.body.property_privacy,
         file_name: [],
         file_path: [],

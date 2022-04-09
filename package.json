@@ -1,6 +1,6 @@
 {
-  "name": "nft-mint-api",
-  "version": "1.0.0",
+  "name": "metadata-api",
+  "version": "1.2.0",
   "description": "",
   "main": "app.js",
   "scripts": {

@@ -1,17 +1,13 @@
 var express = require("express");
 var router = express.Router({ mergeParams: true });
 
-var imageController = require("../controllers/imageController");
+var avatarController = require("../controllers/avatarController");
 const upload = require("../middleware/upload_image");
 
-router.get("/", imageController.getImageByContractAddress);
+router.get("/", avatarController.getAllAvatar);
 
-router.get("/:fileName", imageController.getOneImage);
+router.get("/:image_hash", avatarController.getAvatarByImageHash);
 
-router.post("/", upload.single("image"), imageController.uploadImages);
-
-// router.post('/', upload.array("image", 5), imageController.uploadImages)
-
-// router.delete('/', imageController.deleteImageByContractAddress)
+router.post("/", upload.single("image"), avatarController.uploadAvatar);
 
 module.exports = router;
