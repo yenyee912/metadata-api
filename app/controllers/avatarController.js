@@ -2,7 +2,6 @@
 // this is to share one model among collections
 const Avatar = require("../models/Model")("avatar");
 
-
 const path = require("path");
 const fs = require("fs");
 
@@ -10,7 +9,9 @@ async function pushFiles(metadata, token_id, index) {
   let tempPath = metadata.path;
   let extension = path.extname(metadata.originalname);
   let date = Date.now();
-  let targetPath = path.resolve("./avatars/" + date + "-" + token_id + extension);
+  let targetPath = path.resolve(
+    "./avatars/" + date + "-" + token_id + extension
+  );
   let newPath = fs.rename(tempPath, targetPath, function (err) {
     // console.log(newPath);
   });
@@ -20,7 +21,6 @@ async function pushFiles(metadata, token_id, index) {
 
   return { file_name: filename, file_path: filepath };
 }
-
 
 // meaningless, just to test query
 exports.getAllAvatar = async (req, res) => {
@@ -38,13 +38,15 @@ exports.getAllAvatar = async (req, res) => {
   }
 };
 
-
 exports.getAvatarByImageHash = async (req, res) => {
   try {
     const x = await Avatar.find(req.params);
 
     if (x) res.status(200).send({ data: x });
-    else res.status(200).send({ msg: `No data with image hash= ${req.query.params}.` });
+    else
+      res
+        .status(200)
+        .send({ msg: `No data with image hash= ${req.query.params}.` });
   } catch (err) {
     res
       .status(500)
@@ -63,7 +65,7 @@ exports.uploadAvatar = async (req, res) => {
   }
 
   try {
-    if (req.files) {
+    if (req.file) {
       let filesRecord = new Avatar({
         contract_address: req.body.contract_address,
         attributes: req.body.attributes,
@@ -75,7 +77,7 @@ exports.uploadAvatar = async (req, res) => {
         file_path: "",
       });
 
-      let imageData = await pushImages(req.file, filesRecord.token_id);
+      let imageData = await pushFiles(req.file, filesRecord.token_id);
       filesRecord.file_path = imageData.filePath;
       filesRecord.file_name = imageData.fileName;
 
@@ -105,4 +107,3 @@ exports.uploadAvatar = async (req, res) => {
       .send({ msg: `Error while uploading avatar: ${err.message}.` });
   }
 };
-
