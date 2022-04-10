@@ -1,7 +1,6 @@
 // first arg: set mdoel path, 2nd arg: collection SINGULAR NAME
 // this is to share one model among collections
-const Map2 = require("../models/Model")("map"); 
-
+const Map2 = require("../models/Model")("map");
 
 const path = require("path");
 const fs = require("fs");
@@ -39,11 +38,14 @@ exports.getAllMaps = async (req, res) => {
 
 exports.getMapByImageHash = async (req, res) => {
   try {
-    console.log(req.params)
+    console.log(req.params);
     const x = await Map2.find(req.params);
 
     if (x) res.status(200).send({ data: x });
-    else res.status(200).send({ msg: `No data with image hash= ${req.query.params}.` });
+    else
+      res
+        .status(200)
+        .send({ msg: `No data with image hash= ${req.query.params}.` });
   } catch (err) {
     res
       .status(500)
@@ -53,7 +55,7 @@ exports.getMapByImageHash = async (req, res) => {
 
 exports.uploadMap = async (req, res) => {
   let token_id = req.body.token_id;
-  
+
   const map = await Map2.findOne({ token_id: token_id });
 
   if (map) {
@@ -113,12 +115,29 @@ exports.uploadMap = async (req, res) => {
 };
 
 exports.updateOneMap = async (req, res) => {
-  let image_hash = req.body.image_hash;
+  let image_hash = req.params.image_hash;
+
+  const map = await Map2.findOne({ token_id: req.body.token_id });
+
+  if (map) {
+    if (req.files) {
+      // let targetPath = path.resolve(map.file_path[0]);
+      // let targetPath = path.resolve("./maps/");
+      // console.log(targetPath);
+      // console.log(targetPath + map.file_path);
+
+      for (let i = 0; i < map.file_name.length; i++) {
+        let targetPath = path.resolve("./maps/", map.file_name[i]);
+        fs.unlinkSync(targetPath);
+        // console.log(targetPath);
+      }
+    }
+  }
 
   if (req.files) {
     let filesRecord = {
       contract_address: req.body.contract_address,
-      metadata: req.body.metadata,
+      attributes: req.body.attributes,
       token_id: req.body.token_id,
       ipfs_url: req.body.ipfs_url,
       property_privacy: req.body.property_privacy,
@@ -135,7 +154,7 @@ exports.updateOneMap = async (req, res) => {
 
     try {
       const x = await Map2.findOneAndUpdate(
-        { image_hash: { $eq: image_hash  } },
+        { image_hash: { $eq: image_hash } },
         filesRecord,
         {
           upsert: false,
@@ -150,12 +169,12 @@ exports.updateOneMap = async (req, res) => {
         });
       } else {
         res.status(200).send({
-          msg: `Unable to update seed status. Please try again.`,
+          msg: `Unable to update map status. Please try again.`,
         });
       }
     } catch (err) {
       res.status(500).send({
-        msg: `Error while updating seed status: ${err.message}.`,
+        msg: `Error while updating map status: ${err.message}.`,
       });
     }
   }
