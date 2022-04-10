@@ -136,10 +136,10 @@ exports.updateOneMap = async (req, res) => {
 
   if (req.files) {
     let filesRecord = {
-      contract_address: req.body.contract_address,
-      attributes: req.body.attributes,
+      // contract_address: req.body.contract_address,
+      // attributes: req.body.attributes,
       token_id: req.body.token_id,
-      ipfs_url: req.body.ipfs_url,
+      // ipfs_url: req.body.ipfs_url,
       property_privacy: req.body.property_privacy,
       file_name: [],
       file_path: [],
