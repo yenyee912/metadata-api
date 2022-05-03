@@ -10,6 +10,16 @@ router.get("/:image_hash", mapController.getMapByImageHash);
 
 router.post("/", upload.array("files", 2), mapController.uploadMap);
 
-router.put("/:image_hash", upload.array("files", 2), mapController.updateOneMap);
+router.post(
+  "/maps",
+  upload.array("files", 36),
+  mapController.uploadMultipleMaps
+);
+
+router.put(
+  "/:image_hash",
+  upload.array("files", 2),
+  mapController.updateOneMap
+);
 
 module.exports = router;
